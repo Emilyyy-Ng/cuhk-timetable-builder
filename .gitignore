@@ -32,6 +32,16 @@ favourites.json
 *.seed
 *.pid.lock
 
+# ─── Data Files ─────────────────────────────────────────────
+data/                             
+*.json
+*.csv
+*.txt
+!package.json
+!package-lock.json
+!tsconfig.json
+!requirements.txt
+
 # ─── OS / Editor Junk ──────────────────────────────────────
 .DS_Store
 Thumbs.db
@@ -59,6 +69,3 @@ htmlcov/
 *.bak
 *.tmp
 file_structure.txt
-
-# ─── Keep these in Git ─────────────────────────────────────
-# data/ is NOT ignored - it's needed for Render deployment
