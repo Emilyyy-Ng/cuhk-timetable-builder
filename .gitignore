@@ -1,0 +1,64 @@
+# ─── Node / Vite ───────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+node_modules/
+
+# ─── Python ────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+ENV/
+env/
+*.egg-info/
+*.egg
+dist/
+build/
+*.so
+
+# ─── Environment & Secrets ──────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─── Runtime State ──────────────────────────────────────────
+favourites.json
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# ─── OS / Editor Junk ──────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.iml
+*.sublime-*
+.project
+.classpath
+.settings/
+
+# ─── Testing & Coverage ─────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# ─── Miscellaneous ──────────────────────────────────────────
+*.bak
+*.tmp
+file_structure.txt
+
+# ─── Keep these in Git ─────────────────────────────────────
+# data/ is NOT ignored - it's needed for Render deployment

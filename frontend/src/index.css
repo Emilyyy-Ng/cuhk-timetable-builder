@@ -1,0 +1,77 @@
+/* frontend/src/index.css */
+@import "tailwindcss";
+
+/* ── UI tokens (Tailwind v4 — this file IS the config) ──
+   Primary is indigo (#4069FF). Measured contrast on white is
+   ≈ 4.5:1 — passes WCAG AA for normal text (not AAA). Safe for
+   buttons/icons/headings; avoid for small body copy.
+   Dark/darker variants provide hover/pressed states.        */
+@theme {
+  --color-cuhk-primary: #4069FF;         /* actions, active states    */
+  --color-cuhk-primary-dark: #3357D6;    /* hover, high-emphasis text */
+  --color-cuhk-primary-darker: #2D4EC4;  /* pressed                   */
+  --color-cuhk-primary-light: #EEF2FF;   /* solid tint (info panels)  */
+  --color-cuhk-accent: #7C3AED;          /* violet — gradient partner */
+
+  /* Link text ("Details", "Back to Main") — a calmer blue that
+     reads as text rather than an action, keeping visual hierarchy. */
+  --color-cuhk-blue: #3272B8;            /* ~5.0:1 on white ✅ */
+  --color-cuhk-light-blue: #E0EEFF;
+}
+
+body {
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  background-color: #f8fafc;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ── Motion primitives (entrance animations) ── */
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.animate-overlay-in { animation: overlay-in 150ms ease-out both; }
+.animate-modal-in   { animation: modal-in 200ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-toast-in   { animation: toast-in 200ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-overlay-in, .animate-modal-in, .animate-toast-in { animation: none; }
+}
+
+/* Skeleton loader animation */
+.skeleton {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 8px;
+}
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* TBA Warning box */
+.tba-warning {
+  background: #fef3c7;
+  color: #92400e;
+  padding: 10px 15px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+  border-left: 4px solid #f59e0b;
+}
