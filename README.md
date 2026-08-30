@@ -35,7 +35,7 @@ out courses whose prerequisites you haven't met, and browse ranked schedules.
 ## How It Works
 
 1. Each selected course is expanded into its possible section combinations
-   (e.g. one LECT + one of five TUT groups).
+   (e.g. one LEC + one of five TUT sections).
 2. Beam search explores combinations, pruning any with time conflicts,
    lunch-window overlaps, prerequisite violations, or credit-limit breaches.
 3. Surviving schedules are scored by weighted priorities (your #1 priority
@@ -76,7 +76,7 @@ out courses whose prerequisites you haven't met, and browse ranked schedules.
 │   └── main.py               # FastAPI app: routes, CORS, caching
 ├── src/
 │   ├── parsers/
-│   │   ├── course_parser.py  # scraped JSON → normalized course objects
+│   │   ├── course_parser.py  # JSON → normalized course objects
 │   │   └── prereq_parser.py  # prerequisite/exclusion text → structured rules
 │   └── builder/              # scheduling engine
 │       ├── beam_search.py
@@ -96,6 +96,7 @@ out courses whose prerequisites you haven't met, and browse ranked schedules.
 │       ├── components/       # Sidebar, MainContent, TimetableView, CourseModal
 │       ├── utils/            # time formatting, building-name abbreviations
 │       └── api.js            # API client (relative URLs; proxied in prod)
+├── render-build.sh           # downloads course data on Render deployment
 ├── netlify.toml              # Netlify build config + /api redirect rules
 ├── requirements.txt
 └── README.md
@@ -115,10 +116,10 @@ This repository uses course data from the [CUtopia Labs community dataset](https
 
 **Option A: Use pre-scraped data (recommended)**
 ```bash
-# Clone the dataset repository
+# Clone the dataset repository (JSON files are in courses/)
 git clone https://github.com/cutopia-labs/cuhk-course-data.git temp-data
 # Copy the JSON files to your data/ directory
-cp temp-data/data/*.json data/
+cp temp-data/courses/*.json data/
 # Clean up
 rm -rf temp-data
 ```
@@ -177,34 +178,12 @@ The UI currently offers: `2026-27 Term 1`, `2026-27 Term 2`,
    - `DEFAULT_CONFIG.term` in `frontend/src/App.jsx`
 4. Commit & push — Netlify and Render redeploy automatically.
 
-## Deployment
-
-**Frontend on Netlify, API on Render's free tier**, with Netlify
-reverse-proxying `/api/*` to Render so the browser stays same-origin
-(no CORS involved).
-
-<details>
-<summary>Reproducing this deployment</summary>
-
-1. Push the repo to GitHub and connect it to both providers.
-2. **Render** (new Web Service):
-   - Runtime: Python 3 · Build: `pip install -r requirements.txt`
-   - Start: `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
-   - Env vars: `PYTHON_VERSION=3.12.7`; optionally
-     `ALLOWED_ORIGINS=http://localhost:5173` (only needed for *direct*
-     browser access — unnecessary while traffic flows through the proxy)
-3. **Netlify**: reads `netlify.toml` from the repo root. Edit its
-   `[[redirects]]` target to your Render URL. Leave the Netlify UI's
-   *Base directory* field **empty** — the TOML owns the build config.
-
-</details>
-
 ## Troubleshooting
 
 | Symptom | Cause & fix |
 |---|---|
 | First page load hangs ~30–60 s | Normal on Render's free tier — the instance sleeps when idle and boots on demand. Subsequent requests are fast. |
-| 404 "No courses parsed" | `data/` is empty, or filenames don't match `<SUBJECT>.json`. |
+| 404 "No courses parsed" | `data/` is empty, or filenames don't match `<SUBJECT>.json`. On Render, check build logs for data download. |
 | "Target term … not found" | The term string in the UI isn't among the `terms` keys in your scraped JSON — align them (see Supported Terms). |
 | PDF upload fails immediately | `python-multipart` missing from your Python environment. |
 | Site loads but course list never appears; console shows HTML where JSON was expected | The `/api` proxy isn't active — check `netlify.toml` redirects are deployed and that Netlify's Base directory field is empty. |
@@ -221,11 +200,11 @@ server-side.
 
 Course schedule data is sourced from the open-source community dataset maintained by the [CUtopia Labs](https://github.com/cutopia-labs) team at [cutopia-labs/cuhk-course-data](https://github.com/cutopia-labs/cuhk-course-data) — thanks to their team for maintaining this resource.
 
-The data is collected from CUHK's public course offering pages. The course scraping tool [mikezzb/cuhk-course-scraper](https://github.com/mikezzb/cuhk-course-scraper) (credit [@mikezzb](https://github.com/mikezzb)) is available as an alternative for generating fresh data.
+The data is collected from CUHK's course offering pages. The course scraping tool [mikezzb/cuhk-course-scraper](https://github.com/mikezzb/cuhk-course-scraper) (credit [@mikezzb](https://github.com/mikezzb)) is available as an alternative for generating fresh data.
 
 ### ⚠️ Important Licensing and Usage Notice
 
-- **Course data** is sourced from **CUHK's public course offerings** and remains subject to **CUHK's terms of use**.
+- **Course data** is sourced from **CUHK's course offerings** and remains subject to **CUHK's terms of use**.
 - The **MIT license** in this repository applies **only to the code** (the software implementation, parser, builder engine, frontend, etc.).
 - **Neither the CUtopia data repository nor the scraper repository** provides an explicit license for the scraped course data. The data itself is factual information from public university course offerings.
 - **This project does not claim ownership** of the course data; it is provided for educational and personal planning purposes.
@@ -244,7 +223,7 @@ Neither option is redistributed with this repository; users obtain data via the 
 
 ## License
 
-The **code** in this repository is released under the MIT License (see `LICENSE`).
+The **code** in this repository is released under the [MIT License](LICENSE).
 
 **Third-party resources are linked, not copied**, and remain under their respective owners' terms. **Course data** you use from the CUtopia dataset or generate yourself via the scraper derives from CUHK's public course offerings and remains subject to CUHK's terms.
 
