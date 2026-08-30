@@ -33,7 +33,7 @@ favourites.json
 *.pid.lock
 
 # ─── Data Files ─────────────────────────────────────────────
-data/                             
+data/
 *.json
 *.csv
 *.txt
@@ -41,6 +41,9 @@ data/
 !package-lock.json
 !tsconfig.json
 !requirements.txt
+
+# ─── Deployment Scripts ────────────────────────────────────
+render-build.sh
 
 # ─── OS / Editor Junk ──────────────────────────────────────
 .DS_Store
