@@ -1,6 +1,6 @@
 # CUHK Timetable Builder
 
-[![Live app](https://img.shields.io/badge/live-cuhk--schedule--builder-009C64)](https://cuhk-schedule-builder.netlify.app)
+<!-- [![Live app](https://img.shields.io/badge/live-cuhk--schedule--builder-009C64)](https://cuhk-schedule-builder.netlify.app) -->
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
 [![React](https://img.shields.io/badge/react-19-61DAFB)](https://react.dev/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
@@ -13,7 +13,8 @@ out courses whose prerequisites you haven't met, and browse ranked schedules.
 > ⚠️ **Unofficial student project.** Not affiliated with or endorsed by CUHK.
 > Always verify schedules on official CUHK systems before enrolling.
 
-🔗 **Live app:** [https://cuhk-schedule-builder.netlify.app](https://cuhk-schedule-builder.netlify.app)
+<!-- 🔗 **Live app:** [https://cuhk-schedule-builder.netlify.app](https://cuhk-schedule-builder.netlify.app)
+*(Temporarily unavailable — hosting credits exhausted. Will be restored by 12/09/2026) -->
 
 ## Screenshot
 
