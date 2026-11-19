@@ -33,8 +33,6 @@ favourites.json
 *.pid.lock
 
 # ─── Data Files ─────────────────────────────────────────────
-data/
-*.json
 *.csv
 *.txt
 !package.json
