@@ -106,7 +106,7 @@ async def optimize_schedule(req: OptimizeRequest):
             min_courses=req.min_courses,
             max_courses=req.max_courses,
             beam_width=req.beam_width,
-            priority_order=req.priorities,         
+            priority_order=req.priorities,
             ignore_prereqs=req.ignore_prereqs,
             lunch_start=req.lunch_start,
             lunch_end=req.lunch_end,
@@ -145,6 +145,6 @@ async def upload_transcript(file: UploadFile = File(...)):
         raise HTTPException(status_code=500, detail=f"Error parsing PDF: {str(e)}")
 
 
-@app.get("/")
+@app.api_route("/", methods=["GET", "HEAD"])
 async def root():
-    return {"message": "CUHK Timetable Optimizer API is running."}
+  return {"message": "CUHK Timetable Optimizer API is running."}
